@@ -73,6 +73,17 @@ func newLoadBalancer(params exporter.CreateSettings, cfg component.Config, facto
 			return nil, err
 		}
 	}
+
+	if oCfg.Resolver.URI != nil {
+
+		uriLogger := params.Logger.With(zap.String("resolver", "uri"))
+		var err error
+		res, err = newURIResolver(uriLogger, oCfg.Resolver.URI.URI, oCfg.Resolver.URI.Interval, oCfg.Resolver.URI.Timeout)
+		if err != nil {
+			return nil, err
+		}
+	}
+
 	if oCfg.Resolver.K8sSvc != nil {
 		k8sLogger := params.Logger.With(zap.String("resolver", "k8s service"))
 

@@ -35,6 +35,7 @@ type ResolverSettings struct {
 	Static *StaticResolver `mapstructure:"static"`
 	DNS    *DNSResolver    `mapstructure:"dns"`
 	K8sSvc *K8sSvcResolver `mapstructure:"k8s"`
+	URI    *URIResolver    `mapstructure:"uri"`
 }
 
 // StaticResolver defines the configuration for the resolver providing a fixed list of backends
@@ -46,6 +47,13 @@ type StaticResolver struct {
 type DNSResolver struct {
 	Hostname string        `mapstructure:"hostname"`
 	Port     string        `mapstructure:"port"`
+	Interval time.Duration `mapstructure:"interval"`
+	Timeout  time.Duration `mapstructure:"timeout"`
+}
+
+// GCSResolver defines the configuration for the GCS resolver
+type URIResolver struct {
+	URI      string        `mapstructure:"sourceuri"`
 	Interval time.Duration `mapstructure:"interval"`
 	Timeout  time.Duration `mapstructure:"timeout"`
 }
